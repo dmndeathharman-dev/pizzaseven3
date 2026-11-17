@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17110f">
+  <title>Pizza Seven — Dera Bassi</title>
+  <meta name="description" content="Pizza, shakes, wraps and more at Pizza Seven, Dera Bassi. Order online or visit us.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #17110f;
+      --panel: #211815;
+      --panel-light: #2b201c;
+      --cream: #fff3df;
+      --muted: #b9a99b;
+      --red: #f04b35;
+      --orange: #ff9c47;
+      --green: #8fae71;
+      --line: rgba(255,243,223,.12);
+      --radius: 24px;
+      --shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      color: var(--cream);
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(240,75,53,.12), transparent 35rem),
+        var(--bg);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; width: 100%; object-fit: cover; }
+    .container { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .eyebrow {
+      color: var(--orange); text-transform: uppercase; letter-spacing: .2em;
+      font-size: .72rem; font-weight: 800;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, .serif { font-family: "Playfair Display", serif; }
+    .section { padding: 100px 0; }
+    .section-heading { max-width: 660px; margin-bottom: 38px; }
+    .section-heading h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: .98; margin: 12px 0; }
+    .section-heading p { color: var(--muted); line-height: 1.7; }
+
+    /* Header */
+    .header {
+      height: 76px; position: fixed; inset: 0 0 auto; z-index: 20;
+      background: rgba(23,17,15,.76); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .08em; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 13px; display: grid; place-items: center;
+      background: linear-gradient(145deg, var(--orange), var(--red)); color: white;
+      transform: rotate(-8deg); box-shadow: 0 8px 24px rgba(240,75,53,.25);
+    }
+    .brand-mark span { transform: rotate(8deg); font-size: 1.2rem; }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #e6d8c9; font-size: .9rem; }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      border: 0; border-radius: 999px; padding: 13px 20px; font-weight: 800;
+      color: white; background: var(--red); cursor: pointer;
+      box-shadow: 0 10px 26px rgba(240,75,53,.22); transition: transform .2s, filter .2s;
+    }
+    .nav-cta:hover, .button:hover { transform: translateY(-3px); filter: brightness(1.08); }
+    .menu-toggle { display: none; background: none; color: white; border: 0; font-size: 1.7rem; }
+
+    /* Hero */
+    .hero {
+      min-height: 760px; height: min(900px, 100svh); position: relative;
+      display: flex; align-items: center; overflow: hidden; padding-top: 76px;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(23,17,15,.98) 0%, rgba(23,17,15,.84) 42%, rgba(23,17,15,.12) 100%),
+        linear-gradient(0deg, var(--bg), transparent 35%),
+        url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1800&q=85") center/cover;
+      transform: scale(1.04);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 650px; padding: 70px 0 110px; }
+    .hero h1 { font-size: clamp(4rem, 10vw, 8.4rem); line-height: .83; letter-spacing: -.055em; margin: 18px 0 24px; }
+    .hero h1 span { color: var(--orange); display: block; }
+    .hero-copy { max-width: 470px; color: #e0d1c2; line-height: 1.75; font-size: 1.03rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .button.secondary { color: var(--cream); background: rgba(255,255,255,.08); border: 1px solid var(--line); box-shadow: none; }
+    .hero-meta { display: flex; gap: 22px; margin-top: 42px; color: #e6d8c9; font-size: .86rem; }
+    .rating { color: #ffd06a; font-weight: 800; }
+    .hero-sticker {
+      position: absolute; right: 9%; bottom: 15%; z-index: 3; width: 132px; height: 132px;
+      display: grid; place-items: center; text-align: center; border-radius: 50%;
+      color: #26150e; background: var(--orange); font-weight: 900; line-height: 1.15;
+      transform: rotate(10deg); box-shadow: var(--shadow); animation: bob 4s ease-in-out infinite;
+    }
+    .hero-sticker small { display: block; font-size: .65rem; letter-spacing: .12em; }
+    .scroll-note { position: absolute; bottom: 28px; left: 50%; color: var(--muted); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
+
+    /* Floating food */
+    .food-float {
+      position: absolute; z-index: 2; width: clamp(160px, 22vw, 290px); aspect-ratio: 1;
+      right: 10%; top: 20%; border-radius: 50%;
+      filter: drop-shadow(0 35px 35px rgba(0,0,0,.45));
+      animation: float 5s ease-in-out infinite;
+    }
+    .food-float img { height: 100%; border-radius: 50%; border: 8px solid rgba(255,255,255,.12); }
+    .orbit {
+      position: absolute; inset: -18px; border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%; animation: spin 18s linear infinite;
+    }
+    .orbit::after { content: "✦"; color: var(--orange); position: absolute; left: 15%; top: 8%; font-size: 1.4rem; }
+
+    /* Categories */
+    .category-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .category {
+      padding: 20px; min-height: 150px; border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--panel-light), var(--panel));
+      border: 1px solid var(--line); transition: transform .3s, border-color .3s;
+    }
+    .category:hover { transform: translateY(-8px) rotateX(4deg); border-color: rgba(255,156,71,.55); }
+    .category .emoji { font-size: 2rem; }
+    .category h3 { margin: 16px 0 5px; }
+    .category p { margin: 0; color: var(--muted); font-size: .85rem; }
+
+    /* Menu */
+    .menu-section { background: linear-gradient(180deg, transparent, rgba(255,156,71,.035), transparent); }
+    .menu-top { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 25px 0 30px; }
+    .filter {
+      border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px;
+      color: var(--muted); background: transparent; cursor: pointer;
+    }
+    .filter.active, .filter:hover { color: #21120d; background: var(--orange); border-color: var(--orange); }
+    .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .food-card {
+      overflow: hidden; background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: 0 15px 45px rgba(0,0,0,.16);
+      transform-style: preserve-3d; transition: transform .18s ease, border-color .2s;
+    }
+    .food-card:hover { border-color: rgba(255,156,71,.45); }
+    .food-card.hidden { display: none; }
+    .food-image { height: 220px; position: relative; overflow: hidden; }
+    .food-image img { height: 100%; transition: transform .6s; }
+    .food-card:hover .food-image img { transform: scale(1.08); }
+    .food-tag { position: absolute; top: 14px; left: 14px; padding: 7px 11px; border-radius: 99px; color: #25150e; background: var(--orange); font-size: .72rem; font-weight: 800; }
+    .food-info { padding: 19px; }
+    .food-title { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+    .food-title h3 { margin: 0; font-size: 1.1rem; }
+    .price { color: var(--orange); font-weight: 800; white-space: nowrap; }
+    .food-info p { color: var(--muted); font-size: .88rem; line-height: 1.55; margin: 10px 0 17px; min-height: 42px; }
+    .add-button { width: 100%; padding: 11px; border: 1px solid var(--line); border-radius: 12px; background: #30221d; color: var(--cream); font-weight: 700; cursor: pointer; }
+    .add-button:hover { background: var(--red); border-color: var(--red); }
+
+    /* Story / details */
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .story-image { position: relative; min-height: 440px; }
+    .story-image img { height: 440px; border-radius: 30px; box-shadow: var(--shadow); }
+    .story-badge { position: absolute; right: -20px; bottom: 24px; padding: 18px 22px; background: var(--green); color: #182014; border-radius: 18px; font-weight: 800; transform: rotate(-4deg); }
+    .story-copy h2 { font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1; }
+    .story-copy p { color: var(--muted); line-height: 1.8; }
+    .feature-list { display: grid; gap: 14px; margin: 25px 0; }
+    .feature { display: flex; gap: 12px; align-items: center; }
+    .feature b { color: var(--orange); }
+
+    /* Visit / footer */
+    .visit-card {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; padding: 36px;
+      border: 1px solid var(--line); border-radius: 30px;
+      background: radial-gradient(circle at 90% 10%, rgba(240,75,53,.16), transparent 22rem), var(--panel);
+    }
+    .visit-card h2 { font-size: clamp(2.4rem, 5vw, 4rem); margin: 10px 0; }
+    .visit-card p { color: var(--muted); line-height: 1.7; }
+    .visit-details { display: grid; gap: 12px; align-content: center; }
+    .detail { padding: 15px; border-radius: 15px; background: rgba(255,255,255,.045); }
+    .detail strong { display: block; margin-bottom: 4px; }
+    .detail span { color: var(--muted); font-size: .9rem; }
+    .footer { padding: 30px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+
+    /* WhatsApp floating button */
+    .whatsapp {
+      position: fixed; z-index: 30; right: 24px; bottom: 24px; width: 64px; height: 64px;
+      display: grid; place-items: center; border-radius: 50%; background: #25d366;
+      color: white; box-shadow: 0 12px 30px rgba(37,211,102,.35);
+      animation: waFloat 3s ease-in-out infinite; transition: transform .2s;
+    }
+    .whatsapp:hover { transform: scale(1.1) rotate(-8deg); }
+    .whatsapp svg { width: 32px; height: 32px; fill: currentColor; }
+
+    /* Reveal + motion */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(4deg); } }
+    @keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes waFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+    @media (max-width: 850px) {
+      .food-float { right: 5%; top: 17%; opacity: .75; width: 210px; }
+      .hero-content { max-width: 570px; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .story-grid { gap: 35px; }
+    }
+    @media (max-width: 650px) {
+      .container { width: min(100% - 30px, 520px); }
+      .header { height: 68px; }
+      .menu-toggle { display: block; }
+      .nav-cta { display: none; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 20px;
+        background: #211815; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 18px;
+      }
+      .nav-links.open { display: flex; }
+      .hero { min-height: 760px; height: 100svh; }
+      .hero::before {
+        background:
+          linear-gradient(90deg, rgba(23,17,15,.92), rgba(23,17,15,.48)),
+          linear-gradient(0deg, var(--bg), transparent 45%),
+          url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1000&q=80") center/cover;
+      }
+      .hero-content { padding-top: 35px; }
+      .hero h1 { font-size: clamp(4rem, 18vw, 6.3rem); }
+      .food-float { width: 145px; top: auto; bottom: 100px; right: 8%; opacity: .88; }
+      .hero-sticker { width: 98px; height: 98px; right: 6%; bottom: 35%; font-size: .8rem; }
+      .hero-meta { gap: 12px; flex-wrap: wrap; }
+      .section { padding: 72px 0; }
+      .category-row { grid-template-columns: repeat(2, 1fr); }
+      .category { min-height: 130px; padding: 16px; }
+      .menu-top { display: block; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .food-image { height: 230px; }
+      .story-grid, .visit-card { grid-template-columns: 1fr; }
+      .story-image, .story-image img { min-height: 300px; height: 300px; }
+      .story-badge { right: 10px; }
+      .visit-card { padding: 25px; }
+      .scroll-note { left: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Pizza Seven home">
+        <span class="brand-mark"><span>7</span></span>
+        <span>PIZZA SEVEN</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#story">Our story</a>
+        <a href="#visit">Visit us</a>
+      </nav>
+
+      <a class="nav-cta" href="#menu">Explore menu <span>↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Dera Bassi · Freshly made, always</div>
+          <h1>Good food.<span>Good mood.</span></h1>
+          <p class="hero-copy">Your neighbourhood spot for cheesy pizzas, delicious shakes and feel-good bites. Made fresh, served with a little extra love.</p>
+          <div class="hero-actions">
+            <a class="button" href="#menu">Explore the menu <span>↗</span></a>
+            <a class="button secondary" href="tel:+918360368929">Call to order</a>
+          </div>
+          <div class="hero-meta">
+            <span class="rating">★ 4.5 <span style="color:#e6d8c9;font-weight:500">(291 reviews)</span></span>
+            <span>₹1–200 per person</span>
+            <span>♧ Dine-in · Takeaway · Delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-float" aria-hidden="true">
+        <div class="orbit"></div>
+        <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=85" alt="">
+      </div>
+      <div class="hero-sticker"><div><small>MADE WITH</small>LOVE<br>& CHEESE</div></div>
+      <div class="scroll-note">Scroll to explore ↓</div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="eyebrow">A little something for everyone</div>
+          <h2>Pick your kind<br>of happy.</h2>
+        </div>
+        <div class="category-row">
+          <a class="category reveal" href="#menu" data-select="Pizza"><span class="emoji">🍕</span><h3>Pizza</h3><p>Cheesy, crispy, lovely.</p></a>
+          <a class="category reveal" href="#menu" data-select="Wraps"><span class="emoji">🌯</span><h3>Wraps</h3><p>A delicious bite on the go.</p></a>
+          <a class="category reveal" href="#menu" data-select="Sides"><span class="emoji">🥟</span><h3>Sides & more</h3><p>Little bites, big joy.</p></a>
+          <a class="category reveal" href="#menu" data-select="Drinks"><span class="emoji">🥤</span><h3>Shakes</h3><p>Cool down, sip happy.</p></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="container">
+        <div class="menu-top">
+          <div class="section-heading reveal">
+            <div class="eyebrow">Fresh from our kitchen</div>
+            <h2>The good stuff.</h2>
+            <p>A few favourites to get you started. Ask us about today's full menu and availability.</p>
+          </div>
+          <a class="button secondary" href="https://wa.me/918360368929?text=Hi%20Pizza%20Seven%2C%20please%20share%20your%20menu." target="_blank" rel="noopener">Ask for full menu ↗</a>
+        </div>
+
+        <div class="filters" aria-label="Filter menu">
+          <button class="filter active" data-filter="All">All items</button>
+          <button class="filter" data-filter="Pizza">Pizza</button>
+          <button class="filter" data-filter="Wraps">Wraps</button>
+          <button class="filter" data-filter="Sides">Sides</button>
+          <button class="filter" data-filter="Drinks">Drinks</button>
+        </div>
+
+        <div class="menu-grid">
+          <article class="food-card reveal" data-category="Pizza">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" alt="Freshly baked pizza"><span class="food-tag">Fan favourite</span></div>
+            <div class="food-info"><div class="food-title"><h3>Classic Cheese Pizza</h3><span class="price">Ask us</span></div><p>Golden crust, rich sauce and plenty of melty cheese.</p><button class="add-button" data-order="Classic Cheese Pizza">Order on WhatsApp ↗</button></div>
+          </article>
+
+          <article class="food-card reveal" data-category="Pizza">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85" alt="Vegetable pizza with fresh toppings"><span class="food-tag">Loaded</span></div>
+            <div class="food-info"><div class="food-title"><h3>Garden Veg Pizza</h3><span class="price">Ask us</span></div><p>A colourful mix of veggies, seasoning and stretchy cheese.</p><button class="add-button" data-order="Garden Veg Pizza">Order on WhatsApp ↗</button></div>
+          </article>
+
+          <article class="food-card reveal" data-category="Drinks">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=85" alt="Chocolate milkshake"><span class="food-tag">Sweet treat</span></div>
+            <div class="food-info"><div class="food-title"><h3>Chocolate Shake</h3><span class="price">Ask us</span></div><p>Thick, chocolatey and made for your pizza break.</p><button class="add-button" data-order="Chocolate Shake">Order on WhatsApp ↗</button></div>
+          </article>
+
+          <article class="food-card reveal" data-category="Pizza">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=85" alt="Pizza with melted cheese"><span class="food-tag">Hot & fresh</span></div>
+            <div class="food-info"><div class="food-title"><h3>Cheesy Special Pizza</h3><span class="price">Ask us</span></div><p>A satisfying cheesy bite for sharing—or not sharing.</p><button class="add-button" data-order="Cheesy Special Pizza">Order on WhatsApp ↗</button></div>
+          </article>
+
+          <article class="food-card reveal" data-category="Wraps">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=85" alt="Fresh wrap with vegetables"><span class="food-tag">On the go</span></div>
+            <div class="food-info"><div class="food-title"><h3>Veggie Wrap</h3><span class="price">Ask us</span></div><p>Fresh, flavourful filling wrapped up in a soft roll.</p><button class="add-button" data-order="Veggie Wrap">Order on WhatsApp ↗</button></div>
+          </article>
+
+          <article class="food-card reveal" data-category="Sides">
+            <div class="food-image"><img loading="lazy" src="https://images.unsplash.com/photo-1534256958597-7fe685cbd745?auto=format&fit=crop&w=900&q=85" alt="Crispy snack bites"><span class="food-tag">Snack time</span></div>
+            <div class="food-info"><div class="food-title"><h3>Snack Bites</h3><span class="price">Ask us</span></div><p>A crispy little side to make your meal complete.</p><button class="add-button" data-order="Snack Bites">Order on WhatsApp ↗</button></div>
+          </article>
+        </div>
+        <p style="color:var(--muted);font-size:.82rem;margin-top:20px">Menu items, prices and availability may change. Please confirm your order with the restaurant.</p>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container story-grid">
+        <div class="story-image reveal">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=1000&q=85" alt="Pizza being served fresh">
+          <div class="story-badge">Freshly made<br>with love ✦</div>
+        </div>
+        <div class="story-copy reveal">
+          <div class="eyebrow">Your local pizza place</div>
+          <h2>Good food brings people together.</h2>
+          <p>Whether it's a quick bite, a family meal or a get-together with friends, Pizza Seven is here to make it a little more delicious.</p>
+          <div class="feature-list">
+            <div class="feature"><b>✦</b><span>Made fresh when you order</span></div>
+            <div class="feature"><b>✦</b><span>Dine-in, takeaway and delivery options</span></div>
+            <div class="feature"><b>✦</b><span>Right here in Shakti Nagar, Dera Bassi</span></div>
+          </div>
+          <a class="button" href="tel:+918360368929">Call Pizza Seven</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="visit">
+      <div class="container">
+        <div class="visit-card reveal">
+          <div>
+            <div class="eyebrow">Come say hello</div>
+            <h2>Your table<br>is waiting.</h2>
+            <p>Find us near the police station on Government College Road. Call ahead to confirm today's opening hours and menu.</p>
+            <a class="button" href="https://maps.google.com/?q=Pizza+Seven+Benipal+Tower+Dera+Bassi" target="_blank" rel="noopener">Get directions ↗</a>
+          </div>
+          <div class="visit-details">
+            <div class="detail"><strong>📍 Address</strong><span>Benipal Tower, Government College Rd, near police station, Shakti Nagar, Dera Bassi, Punjab 140507</span></div>
+            <div class="detail"><strong>☎ Phone</strong><span><a href="tel:+918360368929">083603 68929</a></span></div>
+            <div class="detail"><strong>🕒 Opening hours</strong><span>Hours can change — please call to confirm before visiting.</span></div>
+            <div class="detail"><strong>⭐ Loved locally</strong><span>Rated 4.5 by 291 reviewers (as provided).</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Pizza Seven · Dera Bassi</span>
+      <span>Made for good food and good company.</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp" id="whatsappButton" href="https://wa.me/918360368929?text=Hi%20Pizza%20Seven%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener" aria-label="Chat with Pizza Seven on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 .8A15.1 15.1 0 0 0 3.1 23.7L1 31l7.5-2A15.1 15.1 0 1 0 16 .8Zm0 27.5a12.3 12.3 0 0 1-6.3-1.7l-.5-.3-4.4 1.2L6 23.2l-.3-.5A12.4 12.4 0 1 1 16 28.3Zm6.8-9.3c-.4-.2-2.3-1.1-2.7-1.2s-.6-.2-.9.2-1 1.2-1.2 1.4-.4.3-.8.1a10.1 10.1 0 0 1-3-1.9 11.1 11.1 0 0 1-2.1-2.6c-.2-.4 0-.6.2-.8l.6-.7c.2-.2.2-.4.4-.6s.1-.4 0-.6-.9-2.1-1.3-2.9c-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1 .5s-1.4 1.4-1.4 3.3 1.4 3.8 1.6 4.1 2.8 4.3 6.8 6c.9.4 1.6.6 2.1.7.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.8s.3-1.7.2-1.8-.3-.2-.7-.4Z"/></svg>
+  </a>
+
+  <script>
+    // Mobile navigation
+    const toggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    toggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open);
+      toggle.textContent = open ? "×" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.textContent = "☰";
+    }));
+
+    // Menu category filters
+    const filterButtons = document.querySelectorAll(".filter");
+    const foodCards = document.querySelectorAll(".food-card");
+    function setFilter(category) {
+      filterButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.filter === category));
+      foodCards.forEach(card => {
+        card.classList.toggle("hidden", category !== "All" && card.dataset.category !== category);
+      });
+    }
+    filterButtons.forEach(button => button.addEventListener("click", () => setFilter(button.dataset.filter)));
+    document.querySelectorAll("[data-select]").forEach(link => link.addEventListener("click", () => {
+      setFilter(link.dataset.select);
+    }));
+
+    // WhatsApp order buttons
+    const phone = "918360368929";
+    document.querySelectorAll("[data-order]").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.dataset.order;
+        const message = encodeURIComponent(`Hi Pizza Seven, I'd like to ask about ordering: ${item}. Please share the price and availability.`);
+        window.open(`https://wa.me/${phone}?text=${message}`, "_blank", "noopener");
+      });
+    });
+
+    // Subtle pointer tilt on food cards
+    document.querySelectorAll(".food-card").forEach(card => {
+      card.addEventListener("pointermove", event => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - .5;
+        const y = (event.clientY - rect.top) / rect.height - .5;
+        card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-3px)`;
+      });
+      card.addEventListener("pointerleave", () => card.style.transform = "");
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
